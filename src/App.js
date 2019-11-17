@@ -1,24 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from 'moment'
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+
 import './App.css';
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+const localizer = momentLocalizer(moment)
+const DndCalendar = withDragAndDrop(Calendar)
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div style={{ background: 'green', width: '3rem' }} draggable>drag me</div>
+      <DndCalendar
+        localizer={localizer}
+        events={[{
+          title: 'drag action to calendar',
+          start: moment().toDate(),
+          end: moment().toDate(),
+        }]}
+        style={{ height: '100vh' }}
+        onDragOver={() => console.log('dragging over')}
+        onDropFromOutside={() => console.log('dropped from outside')}
+      />
     </div>
   );
 }
